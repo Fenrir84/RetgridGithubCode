@@ -1,0 +1,30 @@
+﻿<div ng-controller="participantsController as ParCtrl">
+    <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content padding-30">
+        <div class="box-icon-title">
+            <i class="fa fa-users"></i>
+            <h2 class="margin-bottom-0">PARTICIPANTS</h2>
+        </div>
+        <div class="row">
+            <div ng-repeat="participant in ParCtrl.items.participants" class="col-xs-6 col-sm-6 col-md-4 col-lg-4 padding-5" style="padding-left: 8px; padding-right: 8px">
+                <div class="thumbnail wow fadeInRightBig" style="border-color: black; border: solid">
+                    <img class="img-responsive mouseImage" ng-click="ParCtrl.openparticipantDetailsModal(participant)" style="cursor: pointer;" ng-src="{{ParCtrl.getImage(participant.keyName)}}" alt="" height="30" />
+                    <div class="caption padding-3">
+                        <h6 class="margin-bottom-0 text-center">{{participant.personFirstName}} {{participant.personLastName}}</h6>
+                        <hr class="nomargin" />
+                        <h6 class="nomargin text-center">{{participant.roleName}}<span class="pull-right" ng-click="ParCtrl.deleteParticipant(participant.id)" style="cursor:pointer" aria-hidden="true">x</span></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <a id="participantModalButton" href="#" ng-click="ParCtrl.openModal()" style="background-color: grey; text-align: center; margin-bottom: -15px; color: white; border-color: black; vertical-align: middle" class="btn btn-xs btn-hvr hvr-grow">
+                <i class="glyphicon glyphicon-plus"></i>
+                ADD NEW
+            </a>
+        </div>
+    </div>
+    <!-----PARTICIPANTS END------>
+    <!-----PENDING DOCUMENTS----->
+    
+    <!-----PENDING DOCUMENTS END----->
+</div>

@@ -1,0 +1,105 @@
+﻿<div ng-controller="documentsController as docCtrl" class="box-static box-border-top margin-top-15 padding-30">
+    <div class="box-icon-title">
+        <i class="fa fa-file-text-o"></i>
+        <h4 class="margin-bottom-0 text-center">DOCUMENTS</h4>
+    </div>
+    <ul class="side-nav list-group margin-bottom-30" id="documentsNav">
+
+        <!---------CONTRACT DOCUMENTS---------->
+        <li class="list-group-item list-toggle">
+            <a data-toggle="collapse" data-parent="#sidebar-nav" href="#18">CONTRACTS</a>
+            <ul id="18" class="collapse">
+                <li ng-repeat="document in docCtrl.documents | filter:{documentType: {name: 'Contract'}}" ng-click="docCtrl.openModal(document)">
+                    <a href="#" id="anchorText"
+                       class="documentChoice btn btn-3d btn-white btn-sm"
+                       data-title='Document Info'
+                       data-keyName="{{document.keyName}}">
+                        <i ng-click="docCtrl.hello()" class="fa fa-angle-right"></i>
+                        <strong>{{document.documentNickName}}</strong>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!---------LENDER DOCUMENTS---------->
+        <li class="list-group-item list-toggle">
+            <a data-toggle="collapse" data-parent="#sidebar-nav" href="#19">LENDER</a>
+            <ul id="19" class="collapse">
+                <li ng-repeat="document in docCtrl.documents | filter:{documentType: {name: 'Lender'}}" ng-click="docCtrl.openModal(document)">
+                    <a href="#" id="anchorText"
+                       class="documentChoice btn btn-3d btn-white btn-sm"
+                       data-title='Document Info'
+                       data-keyName="{{document.keyName}}">
+                        <i class="fa fa-angle-right"></i>
+                        <strong>{{document.documentNickName}}</strong>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!---------INSPECTION DOCUMENTS---------->
+        <li class="list-group-item list-toggle">
+            <a data-toggle="collapse" data-parent="#sidebar-nav" href="#11">INSPECTIONS</a>
+            <ul id="11" class="collapse">
+                <li ng-repeat="document in docCtrl.documents | filter:{documentType: {name: 'Inspection'}}" ng-click="docCtrl.openModal(document)">
+                    <a href="#" id="anchorText"
+                       class="documentChoice btn btn-3d btn-white btn-sm"
+                       data-title='Document Info'
+                       data-keyName="{{document.keyName}}">
+                        <i class="fa fa-angle-right"></i>
+                        <strong>{{document.documentNickName}}</strong>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!---------HOA DOCUMENTS---------->
+        <li class="list-group-item list-toggle">
+            <a data-toggle="collapse" data-parent="#sidebar-nav" href="#21">HOA</a>
+            <ul id="21" class="collapse">
+                <li ng-repeat="document in docCtrl.documents | filter:{documentType: {name: 'HOA'}}" ng-click="docCtrl.openModal(document)">
+                    <a href="#" id="anchorText"
+                       class="documentChoice btn btn-3d btn-white btn-sm"
+                       data-title='Document Info'
+                       data-keyName="{{document.keyName}}">
+                        <i class="fa fa-angle-right"></i>
+                        <strong>{{document.documentNickName}}</strong>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!---------DISCLOSURE DOCUMENTS---------->
+        <li class="list-group-item list-toggle">
+            <a data-toggle="collapse" data-parent="#sidebar-nav" href="#17">DISCLOSURES</a>
+            <ul id="17" class="collapse">
+                <li ng-repeat="document in docCtrl.documents | filter:{documentType: {name: 'Disclosure'}}" ng-click="docCtrl.openModal(document)">
+                    <a href="#" id="anchorText"
+                       class="documentChoice btn btn-3d btn-white btn-sm"
+                       data-title='Document Info'
+                       data-keyName="{{document.keyName}}">
+                        <i class="fa fa-angle-right"></i>
+                        <strong>{{document.documentNickName}}</strong>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!---------ESCROW DOCUMENTS---------->
+        <li class="list-group-item list-toggle">
+            <a data-toggle="collapse" data-parent="#sidebar-nav" href="#20">ESCROW</a>
+            <ul id="20" class="collapse">
+                <li ng-repeat="document in docCtrl.documents | filter:{documentType: {name: 'Escrow'}}" ng-click="docCtrl.openModal(document)">
+                    <a href="#" id="anchorText"
+                       class="documentChoice btn btn-3d btn-white btn-sm"
+                       data-title='Document Info'
+                       data-keyName="{{document.keyName}}">
+                        <i class="fa fa-angle-right"></i>
+                        <strong>{{document.documentNickName}}</strong>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <a href="#" id="documentModalButton" ng-click="docCtrl.openNewDocModal()" style="visibility: hidden">ADD DOCUMENT</a>
+</div>

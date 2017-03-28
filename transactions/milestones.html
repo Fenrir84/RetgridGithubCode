@@ -1,0 +1,223 @@
+﻿<div ng-controller="milestonesController as MileCtrl" class="col-md-12 col-lg-12 wow fadeInDown smallPadding" ng-show="!MileCtrl.showMilestones">
+    <div class="panel">
+        <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content padding-30 smallPaddingSlight">
+            <div class="box-icon-title">
+                <i class="fa fa-check-square-o"></i>
+                <h2 class="margin-bottom-0">MILESTONES</h2>
+                <div id="milestonesContainer" class="panel-group sortable">
+
+                    <!--START OF MILESTONE-->
+                    <div id="milestone_{{milestone.id}}" ng-repeat="milestone in MileCtrl.items.milestones | orderBy : 'displayOrder'" data-wow-delay="0.5s" class="panel panel-default radius-8">
+                        <div class="panel-heading mouse" style="background-color: rgba(255, 255, 255, 0.90); padding-right: 10px; border-color: rgb(206, 206, 206); border: solid; border-width:thin">
+                            <div class="panel-title">
+                                <strong class="smallText">{{milestone.name}}</strong>
+                                <span id="milestoneStatus" ng-click="MileCtrl.changeStatus(milestone)" title="{{milestone.statusName}}" class="pull-left label {{milestone.statusColor}}" style="cursor:pointer"><i class="fa fa-lg fa-check-square-o"></i> </span>
+
+                                <span style="margin-right: -10px">
+                                    <a href="#collapse{{milestone.id}}" ng-click="MileCtrl.toggleClassCollapse(milestone)" data-toggle="collapse" class="pull-right">
+                                        <i ng-class="{ 'fa-minus-square-o': milestone.isButtonClicked, 'fa-plus-square-o': !milestone.isButtonClicked}" ng-click="MileCtrl.toggleCollapse(milestone)"
+                                           class="fa fa-lg" style="color: dimgrey"></i>
+                                    </a>
+                                </span>
+                                <button class="btn btn-xs btn-default pull-right" style="margin-right: 5px">
+                                    Tasks <span class="badge badge-dark-blue">{{milestone.tasks.length}}</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="collapse{{milestone.id}}" class="panel-collapse collapse">
+                            <div id="tasksContainer" class="panel-body center-block center">
+                                <span style="margin-right: -10px">
+                                    <a href="#" class="btn btn-danger btn-xs pull-right" ng-click="MileCtrl.removeMilestone(milestone.id); $event.stopPropagation(); $event.preventDefault()">delete</a>
+                                </span>
+                                <div id="tasksContainer{{milestone.id}}" class="panel-group taskSortable">
+
+                                    <!--TASK START-->
+                                    <div id="task_{{task.id}}" ng-repeat="task in milestone.tasks | orderBy : 'displayOrder'" class="panel panel-default">
+                                        <div id="{{task.id}}" class="panel-heading droppable ui-widget-header ui-droppable ui-state-highlight" style="padding-right: 10px; background-color: rgb(235, 235, 235)">
+                                            <div class="panel-title">
+                                                <strong class="smallText">{{task.name | uppercase}}</strong>
+                                                <span id="milestoneStatus" ng-click="MileCtrl.changeTaskStatus(task)" title="{{task.statusName}}" class="pull-left label {{task.statusColor}}" style="cursor:pointer"><i class="fa fa-check-circle-o fa-lg"></i> </span>
+
+                                                <span style="margin-right: -10px">
+                                                    <a href="#taskCollapse{{task.id}}" data-toggle="collapse" class="pull-right">
+                                                        <i ng-class="{ 'fa-minus-square-o': task.isButtonClicked, 'fa-plus-square-o': !task.isButtonClicked}" ng-click="MileCtrl.toggleTaskCollapse(task)"
+                                                           class="fa fa-lg" style="color: dimgrey"></i>
+                                                    </a>
+                                                </span>
+                                                <button class="btn btn-xs btn-default pull-right" style="margin-right: 5px">
+                                                    <i class="fa fa-file-text-o"></i> <span class="badge badge-yellow">{{task.documents.length}}</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div id="taskCollapse{{task.id}}" class="panel-collapse collapse" style="background-color:rgba(198, 218, 200, 0.30)">
+                                            <div id="tasksContainer" class="center-block center padding-10">
+                                                <a href="#">
+                                                    <i class="fa fa-clock-o" style="color: dimgrey"></i>
+                                                    <span class="font-lato" style="color: dimgrey">Due On: {{task.duedate | date: "MMM-dd-yyyy"}}</span>
+                                                </a>
+                                                <a href="#">
+                                                    <i class="fa fa-check-square-o" style="color: dimgrey"></i>
+                                                    <span class="font-" style="color: dimgrey">Task Code: {{task.code}}</span>
+                                                </a>
+
+                                                <div ng-repeat="document in task.documents">
+                                                    <hr style="margin:5px" />
+                                                    <i class="ico-color ico-xs ico-hover et-document" ng-click="$emit('ShowDocPreview', document)" style="cursor: pointer; border-width: 1px; border-style: solid; border-color: black; background-color:{{document.documentType.displayColor}}"></i>
+
+                                                    <a href="#">
+                                                        <span class="font-lato" style="color: dimgrey">{{document.documentNickName}}</span>
+                                                    </a>
+                                                    <a href="#">
+                                                        <i class="fa fa-cogs" style="color: dimgrey"></i>
+                                                        <span class="font-lato" style="color: dimgrey">{{document.documentType.name}}</span>
+                                                    </a>
+                                                </div>
+
+                                                <div ng-repeat="chat in task.chats">
+                                                    <div ng-repeat="message in chat.message">
+                                                        <img class="img-responsive" ng-src="{{MileCtrl.getChatPersonImage(message.profilePicture)}}" alt="" style="height:30px; width: auto; border-radius: 20px;" />
+                                                        <a href="#">
+                                                            <span class="font-lato" style="color: dimgrey"><strong>{{message.personName}}</strong></span>
+                                                        </a>
+                                                        <a href="#">
+                                                            <span class="font-lato" style="color: dimgrey">: {{message.messageContent}}</span>
+                                                        </a>
+                                                    </div>
+                                                    <span><i class="fa fa-reply mouse" style="color: dimgrey; cursor: pointer;" ng-click="MileCtrl.showReplyBox(chat)"></i></span>
+                                                    <div ng-show="chat.showingReplyBox">
+                                                        <div class="fancy-form" style="margin-left: 20px; margin-right: 20px; margin-top: 10px">
+                                                            <textarea rows="1" class="form-control word-count box-shadow-1" ng-model="chat.newMessageContent" data-maxlength="25" data-info="textarea-words-info" placeholder="Reply..."></textarea>
+                                                            <i class="fa fa-comments"></i>
+                                                        </div>
+                                                        <span>
+                                                            <a href="#" ng-click="MileCtrl.messageReply(chat)" style="border-color: black" class="btn btn-xs btn-green nomargin"><i class="glyphicon glyphicon-plus"></i>SUBMIT</a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <a href="#" class="btn btn-info btn-xs radius-8" ng-click="MileCtrl.showParticipantMessageBox(task)">
+                                                        <i class="fa fa-comment"></i>
+                                                        Add Message
+                                                    </a>
+                                                </div>
+                                                <div ng-show="task.showingParticipantsBox">
+
+                                                    <div class="col-md-12 col-lg-12">
+                                                        <label>Select Participants</label>
+
+                                                        <select multiple="" name="Roles" class="form-control select2 participantOptions" ng-model="task.pendingMessageRecipients" tabindex="-1" style="display: none; width: 250px; height: 30px">
+                                                           
+                                                        </select>
+
+                                                    </div>
+
+                                                    <span>
+                                                        <a href="#" ng-click="MileCtrl.showLittleMessageBox(task)" style="border-color: black" class="btn btn-xs btn-green nomargin"><i class="glyphicon glyphicon-plus"></i>Choose</a>
+                                                    </span>
+                                                </div>
+
+                                                <div ng-show="task.showingMessageBox">
+                                                    <div class="fancy-form" style="margin-left: 20px; margin-right: 20px; margin-top: 10px">
+                                                        <textarea rows="1" class="form-control word-count box-shadow-1" ng-model="task.pendingMessage" data-maxlength="50" data-info="textarea-words-info" placeholder="50 words maximum..."></textarea>
+                                                        <i class="fa fa-comments"></i>
+                                                    </div>
+                                                    <span>
+                                                        <a href="#" ng-click="MileCtrl.sendMessage(task)" style="border-color: black" class="btn btn-xs btn-green nomargin"><i class="glyphicon glyphicon-plus"></i>SUBMIT</a>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--END OF NEW TASK-->
+                            <!-----ADD NEW TASK BUTTON----->
+                            <a href="#" ng-click="MileCtrl.openModal(milestone.id)" style="background-color: green; color: white; border-color: black" class="btn btn-xs btn-hvr hvr-grow nomargin"><i class="glyphicon glyphicon-plus"></i>ADD TASK</a>
+                            <!-----ADD NEW TASK BUTTON----->
+
+                        </div>
+                    </div>
+                </div>
+                <!--END OF MILESTONE-->
+                <!--------ADD NEW MILESTONE BUTTON--------->
+                <a href="#" ng-click="MileCtrl.openMilestoneModal()" style="background-color: grey; color: white; border-color: black" class="btn btn-xs btn-hvr hvr-grow nomargin"><i class="glyphicon glyphicon-plus"></i>ADD MILESTONE</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<script type="text/javascript">
+    $(function () {        
+
+        $(".droppable").droppable({
+            accept: ".draggable",
+            hoverClass: "dropHover",
+            drop: function (event, ui) {
+                sabio.page.selectedPending.hide();
+                sabio.page.selectedTaskId = $(this).attr("id");
+                $("#documentModalButton").click();
+            }
+        });
+
+         $(".sortable").sortable({
+            revert: true,
+            placeholder: "placeholder",
+            delay: 150,
+            distance: 20,
+            start: function (event, ui) {
+                ui.item.addClass('tilt');
+            },
+            stop: function (event, ui) {
+                ui.item.removeClass("tilt");
+                $("html").unbind('mousemove', ui.item.data("move_handler"));
+                ui.item.removeData("move_handler");
+            },
+            update: function () {
+                sabio.page.milestoneOrder = $('.sortable').sortable('serialize', { key: "" });
+                var array = sabio.page.milestoneOrder.split("&milestone[]=");
+                array[0] = array[0].replace("milestone[]=", "");
+                var orderData = {};
+                orderData.IdList = array;
+                sabio.services.milestones.putOrder(orderData, sabio.page.onSortSuccess, sabio.page.onSortError);
+            }
+        });
+        sabio.page.onSortSuccess = function () {
+            console.log("Update Successful!");
+        }
+        sabio.page.onSortError = function () {
+            console.log("Your ajax call failed!");
+        }
+
+        $(".taskSortable").sortable({
+            revert: true,
+            delay: 150,
+            placeholder: "placeholder",
+            start: function (event, ui) {
+                ui.item.addClass('tilt');
+            },
+            stop: function (event, ui) {
+                ui.item.removeClass("tilt");
+                $("html").unbind('mousemove', ui.item.data("move_handler"));
+                ui.item.removeData("move_handler");
+            },
+            update: function () {
+                sabio.page.taskOrder = $(this).sortable('serialize', { key: "" });
+                var taskArray = sabio.page.taskOrder.split("&task[]=");
+                taskArray[0] = taskArray[0].replace("task[]=", "");
+                var taskOrderData = {};
+                taskOrderData.IdList = taskArray;
+                sabio.services.tasks.putOrder(taskOrderData, sabio.page.onTaskSortSuccess, sabio.page.onTaskSortError);
+            }
+        });
+
+        sabio.page.onTaskSortSuccess = function () {
+            console.log("Updated task order successfully!");
+        }
+        sabio.page.onTaskSortError = function () {
+            console.log("Your ajax call failed!");
+        }
+    });
+</script>-->

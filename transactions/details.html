@@ -1,0 +1,94 @@
+﻿<div ng-controller="transactionDetailsController as DetCtrl" class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content padding-10 padding-top-30 margin-bottom-15 wow fadeInUp">
+    <div class="panel panel-default" style="margin:0px">
+        <div class="box-icon-title">
+            <i class="fa fa-search"></i>
+        </div>
+        <div class="panel-heading" style="background-color: rgba(255, 255, 255, 0.90); padding-right: 10px">
+            <div class="panel-title text-center">
+                <strong class="text-center">TRANSACTION DETAILS</strong>
+                <span style="margin-right: -10px">
+                    <a href="#collapseDetails" ng-click="MileCtrl.toggleClassCollapse(milestone)" data-toggle="collapse" class="pull-right">
+                        <i ng-class="{ 'fa-minus-square-o': milestone.isButtonClicked, 'fa-plus-square-o': !milestone.isButtonClicked}" ng-click="MileCtrl.toggleCollapse(milestone)"
+                           class="fa fa-lg" style="color: dimgrey"></i>
+                    </a>
+                </span>
+            </div>
+        </div>
+        <div id="collapseDetails" class="panel-collapse collapse in" style="padding: 5px;">
+            <div class="row" style="padding: 0px 10px 0px 10px">
+                <div class="col-md-4 col-sm-4">
+                    <p><img ng-src="{{DetCtrl.items.listingDetails.mediaUrl}}" alt="" style="width:80px;height:80px;overflow:hidden" /></p>
+                </div>
+
+                <div class="col-md-8 col-sm-8">
+                    <div class="row text-center" style="padding-right: 10px">
+                        {{DetCtrl.items.listingDetails.streetAddress}} <br />{{DetCtrl.items.listingDetails.city}}, {{DetCtrl.items.listingDetails.state}} {{DetCtrl.items.listingDetails.postalCode}}
+                    </div>
+                    <hr style="margin:5px!important" />
+                    <div class="row">
+                        <div class="col-md-7 col-sm-7" style="padding: 0px;">
+                            <ul class="list-unstyled">
+                                <li><strong>Price: </strong><span>{{DetCtrl.items.listingDetails.listPrice | currency : "$" : 0}}</span></li>
+                                <li><strong>MLS Id: </strong><span>{{DetCtrl.items.listingDetails.mlsListingId}}</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-md-5 col-sm-5" style="padding: 0px;">
+                            <ul class="list-unstyled">
+                                <li><strong>Parcel#: </strong>{{DetCtrl.items.parcelNumber}}</li>
+                                <li><strong>Escrow#: </strong>{{DetCtrl.items.escrowNumber}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="nomargin" />
+            
+            <div class="row" ng-show="DetCtrl.items.listingAgent">
+                <div class="" style="padding: 0px; text-align: left!important;">
+                    <p style="margin: 5px"><i class="fa fa-user"></i> <strong>Listing Agent: </strong>{{DetCtrl.items.listingAgent.showingContactName}}</p>
+                    <p style="margin: 5px"><strong>Contact: </strong>{{DetCtrl.items.listingAgent.showingContactPhone}}</p>
+                </div>
+            </div>
+            <hr class="nomargin" />
+            
+
+            <div ng-repeat="buyer in DetCtrl.items.buyers" class="row">
+                <div class="" style="padding: 0px; text-align: left!important;">
+                    <p style="margin: 5px"><i class="fa fa-user"></i> <strong>Buyer: </strong>{{buyer.firstName}} {{buyer.lastName}}</p>
+                    <p style="margin: 5px"><strong>Contact: </strong>{{buyer.phoneWork | tel}}</p>
+                </div>
+            </div>
+
+            <hr class="nomargin" />
+
+            <div class="row mega-price-table nomargin">
+
+                <div class="col-md-8 col-sm-8 hidden-sm hidden-xs pricing-desc">
+
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-balance-scale"></i> Agent Comm %: <strong>{{DetCtrl.buyingAgent.defaultCommission}}</strong></li>
+                        <li><i class="fa fa-dollar"></i> Other Fees Total: </li>
+                    </ul>
+
+                </div>
+
+                <div class="col-md-4 col-sm-4 block">
+                    <div class="pricing">
+                        <ul class="pricing-table list-unstyled">
+                            <li>
+                                {{DetCtrl.potentialEarnings | currency}}
+                            </li>
+                            <li class="alternate">
+                                $45,000
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

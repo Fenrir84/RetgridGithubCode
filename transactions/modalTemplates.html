@@ -1,0 +1,380 @@
+﻿<script type="text/ng-template" id="participantDetailsModalContent.html">
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <button type="button" ng-click="pDModalCtrl.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title bold" id="myModalLabel"><span class="displayActionView">Participant</span> Details</h4>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+        <div>
+            <div class="col-md-5 col-lg-5">
+                <div class="thumbnail text-center">
+                    <img id="filePreviewImage" ng-src="{{pDModalCtrl.personImageSrc}}" />
+                </div>
+            </div>
+            <div class="col-md-7 col-lg-7">
+                <ul class="side-nav list-group margin-bottom-60" id="sidebar-nav">
+                    <li class="list-group-item"><a href="#"><i class="fa fa fa-user"></i> NAME: <strong id="listingText">{{pDModalCtrl.person.firstName}} {{pDModalCtrl.person.lastName}}</strong></a></li>
+                    <li class="list-group-item"><a href="#"><i class="fa fa-envelope-o"></i> ROLE: <strong id="buyingText">{{pDModalCtrl.selectedPerson.roleName}}</strong></a></li>
+                    <li class="list-group-item"><a href="#"><i class="fa fa-envelope-o"></i> EMAIL: <strong id="buyingText">{{pDModalCtrl.person.emailPublic}}</strong></a></li>
+                    <li class="list-group-item"><a href="#"><i class="fa fa-phone"></i> PHONE: <strong id="buyingText">{{pDModalCtrl.person.phoneWork}}</strong></a></li>
+                    <li class="list-group-item"><a href="#"><i class="fa fa-building-o"></i> CITY: <strong id="buyingText">{{pDModalCtrl.person.city}}</strong></a></li>
+                    <li class="list-group-item"><a href="#"><i class="fa fa-star-o"></i> LANGUAGES: <strong id="buyingText">{{pDModalCtrl.person.languages}}</strong></a></li>
+                </ul>
+            </div>
+        </div>
+        <button type="button" ng-click="pDModalCtrl.cancel()" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</script>
+<!----------NEW MILESTONE MODAL---------->
+<script type="text/ng-template" id="newMilestoneModalContent.html">
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="mModalCtrl.cancel()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title bold" id="myModalLabel"><span class="displayActionView">Add</span> New Milestone</h4>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+        <form name="milestoneForm" method="post" enctype="multipart/form-data" ng-submit="mModalCtrl.validate(milestoneForm.$valid)" novalidate>
+            <fieldset>
+                <input type="hidden" name="action" value="contact_send" />
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6" ng-class="{'has-error' : mModalCtrl.name.$invalid && !mModalCtrl.name.$pristine }">
+                            <label>Milestone Name *</label>
+                            <input type="text" ng-model="mModalCtrl.milestoneData.name" name="name" class="form-control" required>
+                            <p ng-show="milestoneForm.name.$invalid && !milestoneForm.name.$pristine" class="help-block">A name is required.</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6" ng-class="{'has-error' : milestoneForm.code.$invalid && !milestoneForm.code.$pristine }">
+                            <label>Code *</label>
+                            <input type="text" ng-model="mModalCtrl.milestoneData.code" name="code" class="form-control" ng-maxlength="10" required>
+                            <p ng-show="milestoneForm.code.$invalid && !milestoneForm.code$error.maxlength && !milestoneForm.code.$pristine" class="help-block">A code is required.</p>
+                            <p ng-show="milestoneForm.code.$error.maxlength && !milestoneForm.code.$pristine" class="help-block">Cannot be more than 10 characters.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6" ng-class="{'has-error' : milestoneForm.milestoneStatusId.$invalid && !milestoneForm.milestoneStatusId.$pristine }">
+                            <label>Status ID *</label>
+                            <input type="number" ng-model="mModalCtrl.milestoneData.milestoneStatusId" name="milestoneStatusId" class="form-control" required>
+                            <p ng-show="milestoneForm.milestoneStatusId.$invalid && !milestoneForm.milestoneStatusId.$pristine" class="help-block">A status ID is required.</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <label>Milestone Template *</label>
+                            <div class="fancy-form fancy-form-select">
+                                <select name="template" class="form-control">
+                                    <option>Template One</option>
+                                    <option>Template Two</option>
+                                    <option>Template Three</option>
+                                    <option>Template Four</option>
+                                </select>
+                                <i class="fancy-arrow"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-----DATE PICKER2------>
+                <label>Due Date *</label>
+                <div class="fancy-form">
+                    <i class="fa fa-calendar-check-o"></i>
+                    <input type="date" ng-model="mModalCtrl.milestoneData.duedate" class="form-control" uib-datepicker-popup data-format="yyyy-mm-dd" data-lang="en" data-RTL="false">
+                </div>
+                <!-----DATE PICKER------>
+            </fieldset>
+        </form>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="mModalCtrl.cancel()">Close</button>
+        <button type="submit" ng-click="mModalCtrl.addMilestone()" class="btn btn-3d btn-green" data-dismiss="modal" ng-disabled="milestoneForm.$invalid"><i class="fa fa-check"></i>Submit</button>
+    </div>
+
+</script>
+<!-------NEW MILESTONE MODAL END-------->
+<!------------NEW DOCUMENT MODAL------------>
+<script type="text/ng-template" id="newDocumentModalContent.html">
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="nDModalCtrl.cancel()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title bold" id="myModalLabel"><span class="displayActionView">Add</span> New Document</h4>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+        <form name="documentForm" method="post" enctype="multipart/form-data" ng-submit="nDModalCtrl.validate(documentForm.$valid)" novalidate>
+            <fieldset>
+                <input type="hidden" name="action" value="contact_send" />
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6" ng-class="{'has-error' : documentForm.name.$invalid && !documentForm.name.$pristine }">
+                            <label>Document Nickname *</label>
+                            <input type="text" ng-model="nDModalCtrl.documentData.documentNickName" name="name" class="form-control" required>
+                            <p ng-show="documentForm.name.$invalid && !documentForm.name.$pristine" class="help-block">A name is required.</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6" ng-class="{'has-error' : documentForm.code.$invalid && !documentForm.code.$pristine }">
+                            <label>Document Type</label>
+                            <div class="fancy-form fancy-form-select">
+                                <select name="cmdSelectType" ng-model="nDModalCtrl.documentData.documentTypeId" ng-options="docType.name for docType in nDModalCtrl.items.documentTypes" id="cmdSelectType" class="form-control"></select>
+                                <i class="fancy-arrow"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6" ng-class="{'has-error' : documentForm.firstName.$invalid && !documentForm.firstName.$pristine }">
+                            <label>First Name *</label>
+                            <input type="text" ng-model="nDModalCtrl.documentData.firstName" id="cmdTypeFirstName" name="firstName" class="form-control" required>
+                            <p ng-show="documentForm.firstName.$invalid && !documentForm.firstName.$pristine" class="help-block">A first name is required.</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6" ng-class="{'has-error' : documentForm.lastName.$invalid && !documentForm.lastName.$pristine }">
+                            <label>Last Name *</label>
+                            <input type="text" ng-model="nDModalCtrl.documentData.lastName" id="cmdTypeLastName" name="lastName" class="form-control" required>
+                            <p ng-show="documentForm.lastName.$invalid && !documentForm.lastName.$pristine" class="help-block">A last name is required.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-4 col-sm-4" ng-class="{'has-error' : documentForm.requiredSignatures.$invalid && !documentForm.requiredSignatures.$pristine }">
+                            <label>Required Signatures *</label>
+                            <input type="text" ng-model="nDModalCtrl.documentData.requiredSignatures" id="cmdRequiredSignatures" name="requiredSignatures" class="form-control" required>
+                            <p ng-show="documentForm.requiredSignatures.$invalid && !documentForm.requiredSignatures.$pristine" class="help-block">Required signatures required.</p>
+                        </div>
+                        <div class="col-md-4 col-sm-4" ng-class="{'has-error' : documentForm.acquiredSignatures.$invalid && !documentForm.acquiredSignatures.$pristine }">
+                            <label>Acquired Signatures *</label>
+                            <input type="text" ng-model="nDModalCtrl.documentData.acquiredSignatures" id="cmdRequiredSignatures" name="acquiredSignatures" class="form-control" required>
+                            <p ng-show="documentForm.acquiredSignatures.$invalid && !documentForm.acquiredSignatures.$pristine" class="help-block">Acquired signatures required.</p>
+                        </div>
+                        <div class="col-md-4 col-sm-4" ng-class="{'has-error' : documentForm.pendingSignatures.$invalid && !documentForm.pendingSignatures.$pristine }">
+                            <label>Pending Signatures *</label>
+                            <input type="text" ng-model="nDModalCtrl.documentData.pendingSignatures" id="cmdRequiredSignatures" name="pendingSignatures" class="form-control" required>
+                            <p ng-show="documentForm.pendingSignatures.$invalid && !documentForm.pendingSignatures.$pristine" class="help-block">Pending signatures required.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-----DATE PICKER2----->
+                <label>Due Date *</label>
+                <div class="fancy-form">
+                    <i class="fa fa-calendar-check-o"></i>
+                    <input type="date" ng-model="nDModalCtrl.documentData.dateExecuted" class="form-control" uib-datepicker-popup data-format="yyyy-mm-dd" data-lang="en" data-RTL="false">
+                </div>
+                <!-----DATE PICKER------>
+            </fieldset>
+        </form>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+        <button type="button" ng-click="nDModalCtrl.cancel()" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" ng-click="nDModalCtrl.addDocument()" data-dismiss="modal" class="btn btn-3d btn-green" ng-disabled="taskForm.$invalid"><i class="fa fa-check"></i>Submit</button>
+    </div>
+</script>
+<!-----NEW DOCUMENT MODAL END----->
+<!------------NEW PARTICIPANT MODAL------------>
+<script type="text/ng-template" id="participantsModalContent.html">
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <button type="button" ng-click="pModalCtrl.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title bold" id="myModalLabel"><span class="displayActionView">Add</span> New Participant</h4>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+        <form name="participantForm" method="post" enctype="multipart/form-data" ng-submit="pModalCtrl.validate(participantForm.$valid)" novalidate>
+            <fieldset>
+                <input type="hidden" name="action" value="contact_send" />
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6">
+                            <label>Select a Role</label>
+                            <div class="fancy-form fancy-form-select">
+                                <select name="cmdSelectType" ng-change="pModalCtrl.displayPeople()" ng-model="pModalCtrl.selectedRole" ng-options="role.name for role in pModalCtrl.items.roles" id="cmdSelectType" class="form-control"></select>
+                                <i class="fancy-arrow"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6" ng-show="pModalCtrl.showPeople">
+                            <label>Select a Person</label>
+                            <div class="fancy-form fancy-form-select">
+                                <select name="cmdSelectType" ng-change="pModalCtrl.displayPersonDetails(pModalCtrl.selectedPerson)" ng-model="pModalCtrl.selectedPerson" ng-options="person.firstName +' '+ person.lastName for person in pModalCtrl.people" id="cmdSelectType" class="form-control"></select>
+                                <i class="fancy-arrow"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div ng-show="pModalCtrl.showPersonDetails">
+                <div class="col-md-5 col-lg-5">
+                    <div class="thumbnail text-center">
+                        <img id="filePreviewImage" ng-src="{{pModalCtrl.personImageSrc}}" />
+                    </div>
+                </div>
+                <div class="col-md-7 col-lg-7">
+                    <ul class="side-nav list-group margin-bottom-60" id="sidebar-nav">
+                        <li class="list-group-item"><a href="#"><i class="fa fa fa-user"></i> NAME: <strong id="listingText">{{pModalCtrl.selectedPerson.firstName}} {{pModalCtrl.selectedPerson.lastName}}</strong></a></li>
+                        <li class="list-group-item"><a href="#"><i class="fa fa-suitcase"></i> ROLES: <strong id="buyingText">{{pModalCtrl.selectedPerson.roles}}</strong></a></li>
+                        <li class="list-group-item"><a href="#"><i class="fa fa-envelope-o"></i> EMAIL: <strong id="buyingText">{{pModalCtrl.selectedPerson.emailPublic}}</strong></a></li>
+                        <li class="list-group-item"><a href="#"><i class="fa fa-phone"></i> PHONE: <strong id="buyingText">{{pModalCtrl.selectedPerson.phoneWork}}</strong></a></li>
+                        <li class="list-group-item"><a href="#"><i class="fa fa-building-o"></i> CITY: <strong id="buyingText">{{pModalCtrl.selectedPerson.city}}</strong></a></li>
+                        <li class="list-group-item"><a href="#"><i class="fa fa-star-o"></i> RATINGS: <strong id="buyingText">{{pModalCtrl.selectedPerson.ratings}}</strong></a></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+        <button type="button" ng-click="pModalCtrl.cancel()" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" ng-click="pModalCtrl.addParticipant(selectedPerson)" data-dismiss="modal" class="btn btn-3d btn-green" ng-disabled="taskForm.$invalid"><i class="fa fa-check"></i>Submit</button>
+    </div>
+</script>
+<!-----NEW PARTICIPANT MODAL END----->
+<!------------NEW TASK MODAL------------>
+<script type="text/ng-template" id="modalContent.html">
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="tModalCtrl.cancel()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title bold" id="myModalLabel"><span class="displayActionView">Add</span> New Task</h4>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+        <form name="taskForm" method="post" enctype="multipart/form-data" ng-submit="tModalCtrl.validate(taskForm.$valid)" novalidate>
+            <fieldset>
+                <input type="hidden" name="action" value="contact_send" />
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6" ng-class="{'has-error' : taskForm.name.$invalid && !taskForm.name.$pristine }">
+                            <label>Task Name *</label>
+                            <input type="text" ng-model="tModalCtrl.taskData.name" name="name" class="form-control" required>
+                            <p ng-show="taskForm.name.$invalid && !taskForm.name.$pristine" class="help-block">A name is required.</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6" ng-class="{'has-error' : taskForm.code.$invalid && !taskForm.code.$pristine }">
+                            <label>Code *</label>
+                            <input type="text" ng-model="tModalCtrl.taskData.code" name="code" class="form-control" ng-maxlength="10" required>
+                            <p ng-show="taskForm.code.$invalid && !taskForm.code$error.maxlength && !taskForm.code.$pristine" class="help-block">A code is required.</p>
+                            <p ng-show="taskForm.code.$error.maxlength && !taskForm.code.$pristine" class="help-block">Cannot be more than 10 characters.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6" ng-class="{'has-error' : taskForm.taskStatusId.$invalid && !taskForm.taskStatusId.$pristine }">
+                            <label>Status ID *</label>
+                            <input type="number" ng-model="tModalCtrl.taskData.taskStatusId" name="taskStatusId" class="form-control" required>
+                            <p ng-show="taskForm.taskStatusId.$invalid && !taskForm.taskStatusId.$pristine" class="help-block">A status ID is required.</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <label>Task Template *</label>
+                            <div class="fancy-form fancy-form-select">
+                                <select name="template" class="form-control">
+                                    <option>Template One</option>
+                                    <option>Template Two</option>
+                                    <option>Template Three</option>
+                                    <option>Template Four</option>
+                                </select>
+                                <i class="fancy-arrow"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-----DATE PICKER2------>
+                <label>Due Date *</label>
+                <div class="fancy-form">
+                    <i class="fa fa-calendar-check-o"></i>
+                    <input type="date" ng-model="tModalCtrl.taskData.duedate" class="form-control" uib-datepicker-popup data-format="yyyy-mm-dd" data-lang="en" data-RTL="false">
+                </div>
+                <!-----DATE PICKER------>
+            </fieldset>
+        </form>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+        <button type="button" ng-click="tModalCtrl.cancel()" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" ng-click="tModalCtrl.addTask()" data-dismiss="modal" class="btn btn-3d btn-green" ng-disabled="taskForm.$invalid"><i class="fa fa-check"></i>Submit</button>
+    </div>
+</script>
+<!-----NEW TASK MODAL END----->
+<!------------DOCUMENT MODAL------------>
+<script type="text/ng-template" id="documentModalContent.html">
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="dModalCtrl.cancel()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title bold" id="myModalLabel"><span class="displayActionView">Document</span> Detail View</h4>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-lg-4">
+                    <div class="thumbnail text-center">
+                        <img id="filePreviewImage" ng-src="{{dModalCtrl.imageSrc}}" />
+                    </div>
+                </div>
+                <div class="col-md-5 col-lg-5">
+                    <h3 class="text-center">{{dModalCtrl.selectedDocument.documentNickName}}</h3>
+                    <!--Document Details-->
+                    <ul class="side-nav list-group margin-bottom-60" id="sidebar-nav">
+                        <li class="list-group-item"><a href="#"><i class="fa fa fa-user"></i> NAME: <strong id="listingText">{{dModalCtrl.selectedDocument.firstName}} {{dModalCtrl.selectedDocument.lastName}}</strong></a></li>
+                        <li class="list-group-item"><a href="#"><i class="fa fa-building-o"></i> TYPE: <strong id="buyingText">{{dModalCtrl.selectedDocument.documentType.name}}</strong></a></li>
+                        <li class="list-group-item">
+                            <a href="#">
+                                <i class="fa fa-pencil-square-o"></i> SIGNATURES:
+
+                                <p class="nomargin">
+                                    <span>Required: <strong>{{dModalCtrl.selectedDocument.requiredSignatures}}</strong></span>
+                                    <span>Acquired: <strong>{{dModalCtrl.selectedDocument.acquiredSignatures}}</strong></span>
+                                    <span>Pending: <strong>{{dModalCtrl.selectedDocument.pendingSignatures}}</strong></span>
+                                </p>
+
+                                <label class="margin-top-5"><strong>Progress:</strong></label>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8 col-lg-8">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
+                                                <span class="sr-only">55% Complete (success)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!--Document Details End-->
+                    <div class="panel panel-default arrow left">
+                        <div class="panel-body">
+                            <header class="text-left">
+                                <div class="comment-user bold"><i class="fa fa-comments-o"></i> Notes:</div>
+                            </header>
+                            <div class="comment-post">
+                                <p>
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+            <button type="button" ng-click="dModalCtrl.cancel()" class="btn btn-default" data-dismiss="modal">Close</button>
+            <a href="{{dModalCtrl.imageSrc}}" target="_blank" class="btn btn-3d btn-blue"><i class="et-download"></i>Download</a>
+        </div>
+    </div>
+</script>
+<!-----DOCUMENT MODAL END----->
